@@ -110,3 +110,27 @@ export const getPostsForDashboard = lastPost => async (dispatch, getState) => {
     dispatch(asyncActionError());
   }
 };
+
+export const addPostComment = (postId, values, parentId) => async (
+  dispatch,
+  getState,
+  { getFirebase }
+) => {
+  const firebase = getFirebase();
+  const profile = getState().firebase.profile;
+  const user = firebase.auth().currentUser;
+  let newComment = {
+    parentId: parentId,
+    displayName: profile.displayName,
+    photoURL: profile.photoURL || "/Assets/user.png",
+    uid: user.uid,
+    text: values.comment,
+    date: Date.now()
+  };
+  try {
+    await firebase.push(`post_chat/${postId}`, newComment);
+  } catch (error) {
+    console.log(error);
+    toastr.error("Oops", "Comment not posted ");
+  }
+};
