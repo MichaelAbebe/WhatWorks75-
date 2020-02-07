@@ -31,32 +31,37 @@ class NavBar extends Component {
     const { auth ,profile} = this.props;
     const authenticated = auth.isLoaded && !auth.isEmpty;
     return (
-      <Menu inverted fixed="top">
+      <Menu inverted fixed='top'>
         <Container>
-          <Menu.Item as={NavLink} exact to="/" header>
-            <Image size="mini" src="Assets/logo.png" alt="logo" />
+          <Menu.Item as={NavLink} exact to='/' header>
+            <Image size='mini' src='Assets/logo.png' alt='logo' />
             whatWorks
           </Menu.Item>
-          <Menu.Item as={NavLink} exact to="/posts" name="Tips" />
+
           {authenticated && (
             <Fragment>
-              <Menu.Item as={NavLink} exact to="/people" name="people" />
-              <Menu.Item as={NavLink} exact to="/Test" name="Test" />
+              <Menu.Item as={NavLink} exact to='/posts' name='Tips' />
+              <Menu.Item as={NavLink} exact to='/people' name='people' />
+              <Menu.Item as={NavLink} exact to='/Test' name='Test' />
               <Menu.Item>
                 <Button
                   as={Link}
-                  to="/createPost"
-                  floated="right"
+                  to='/createPost'
+                  floated='right'
                   positive
                   inverted
-                  content="Post Tip"
+                  content='Post Tip'
                 />
               </Menu.Item>
             </Fragment>
           )}
 
           {authenticated ? (
-            <SignedIn auth={auth} signOut={this.handleSignOut} profile={profile} />
+            <SignedIn
+              auth={auth}
+              signOut={this.handleSignOut}
+              profile={profile}
+            />
           ) : (
             <SignedOut
               signIn={this.handleSignIn}

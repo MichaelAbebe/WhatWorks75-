@@ -81,11 +81,19 @@ class PostDetailsPage extends Component {
               cancelParticipatingInPost={cancelParticipatingInPost}
             />
             <PostDetailInfo post={post} />
-            <PostDetailChat
+            {isParticipating ? (
+              <PostDetailChat
+                postChat={chatTree}
+                addPostComment={addPostComment}
+                postId={post.id}
+              />
+            ) : null}
+            {/* <PostDetailChat
               postChat={chatTree}
               addPostComment={addPostComment}
               postId={post.id}
-            />
+              
+            /> */}
           </Grid.Column>
           <Grid.Column width={6}>
             <PostDetailSidebar participants={participants} />

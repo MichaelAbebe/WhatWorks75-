@@ -1,13 +1,20 @@
 import React, { Component } from "react";
-import { Segment, Item, Icon, Button, List, Label } from "semantic-ui-react";
+import { Segment, Item, Button, List, Label, Feed } from "semantic-ui-react";
 import { format } from "date-fns";
 import { Link } from "react-router-dom";
 import Participants from "./Participants";
 import { objectToArray } from "../../../app/Common/Util/Helpers";
 import { withFirestore } from "react-redux-firebase";
+import { connect } from "react-redux";
+import distanceInWords from "date-fns/distance_in_words";
+const mapState = state => ({
+  auth: state.firebase.auth
+});
+
 class PostListItem extends Component {
   render() {
-    const { post } = this.props;
+    const { post, auth } = this.props;
+    const authenticated = auth.isLoaded && !auth.isEmpty;
     return (
       <Segment.Group>
         <Segment>
@@ -16,9 +23,8 @@ class PostListItem extends Component {
               <Item.Image size='tiny' circular src={post.hostPhotoURL} />
 
               <Item.Content>
-                <Item.Header as={Link} to={`/posts/${post.id}`}>
-                  {post.ticker}
-                </Item.Header>
+                <Item.Header>{post.ticker}</Item.Header>
+                {/* as={Link} to={`/posts/${post.id}`} */}
                 <br />
                 <Item.Description>
                   Tiped by:
@@ -38,17 +44,25 @@ class PostListItem extends Component {
                   />
                 )}
                 <Item.Description>
-                  <Button
-                    as={Link}
-                    to={`posts/${post.id}`}
-                    size='mini'
-                    color='teal'
-                    floated='right'
-                    content='View'
-                  />
-                  <Icon name='clock' />
-                  {format(post.created.toDate(), "dddd MMM YYYY")}at{" "}
-                  {format(post.created.toDate(), "h:mm a")}
+                  {authenticated ? (
+                    <Button
+                      as={Link}
+                      to={`posts/${post.id}`}
+                      size='mini'
+                      color='teal'
+                      floated='right'
+                      content='View'
+                    />
+                  ) : null}
+                  <Feed.Date>
+                    {distanceInWords(
+                      post.created && post.created.toDate(),
+                      Date.now()
+                    )}{" "}
+                    ago
+                  </Feed.Date>
+                  {/* {format(post.created.toDate(), "dddd MMM YYYY")}at{" "}
+                  {format(post.created.toDate(), "h:mm a")} */}
                 </Item.Description>
               </Item.Content>
             </Item>
@@ -69,4 +83,4 @@ class PostListItem extends Component {
     );
   }
 }
-export default withFirestore(PostListItem);
+export default withFirestore(connect(mapState, null)(PostListItem));

@@ -124,7 +124,7 @@ export const getUserPosts = (userUid, activeTab) => async (
         .where("userUid", "==", userUid)
         .where("catalystDate", ">=", today)
         .orderBy("catalystDate");
-      console.log(query);
+
       break;
     case 3: // hosted events
       query = postsRef

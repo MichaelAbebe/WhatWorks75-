@@ -1,11 +1,16 @@
 import React, { Component, Fragment } from "react";
 import PostListItem from "./PostListItem";
 import InfiniteScroll from "react-infinite-scroller";
+
+  
+
 class PostList extends Component {
   render() {
-    const { posts, getNextPost, loading, morePosts } = this.props;
+    const { posts, getNextPost, loading, morePosts} = this.props;
+   
     return (
       <Fragment>
+        
         {posts && posts.length !== 0 && (
           <InfiniteScroll
             pageStart={0}
@@ -21,4 +26,4 @@ class PostList extends Component {
     );
   }
 }
-export default PostList;
+export default  PostList;

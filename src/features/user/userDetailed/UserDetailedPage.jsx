@@ -39,10 +39,10 @@ const mapState = (state, ownProps) => {
 };
 
 class UserDetailedPage extends Component {
-  async componentDidMount() {
-    let posts = await this.props.getUserPosts(this.props.userUid);
-    console.log(posts);
-  }
+  // async componentDidMount() {
+  //   let posts = await this.props.getUserPosts(this.props.userUid);
+    
+  // }
 
   changeTab = (e, data) => {
     this.props.getUserPosts(this.props.userUid, data.activeIndex);

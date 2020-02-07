@@ -72,8 +72,8 @@ class PostDetailChat extends Component {
 
                   {comment.childNodes &&
                     comment.childNodes.map(child => (
-                      <Comment.Group>
-                        <Comment key={child.id}>
+                      <Comment.Group key={child.id}>
+                        <Comment>
                           <Comment.Avatar
                             src={child.photoURL || "/Assets/user.png"}
                           />
