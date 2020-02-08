@@ -138,6 +138,7 @@ const PhotosPage = ({
         profile={profile}
         deletePhoto={handelDeletePhoto}
         setMainPhoto={handleSetMainPhoto}
+        loading={loading}
       />
     </Segment>
   );

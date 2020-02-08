@@ -20,7 +20,7 @@ const PostDetailHeader = ({
   isHost,
   isParticipating,
   participatingInPost,
-  cancelParticipatingInPost
+  cancelParticipatingInPost,loading
 }) => {
   return (
     <Segment.Group>
@@ -67,7 +67,7 @@ const PostDetailHeader = ({
                 Cancel Join{" "}
               </Button>
             ) : (
-              <Button color='teal' onClick={() => participatingInPost(post)}>
+              <Button loading={loading} color='teal' onClick={() => participatingInPost(post)}>
                 Join
               </Button>
             )}

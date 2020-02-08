@@ -32,7 +32,7 @@ class PostDetailChat extends Component {
           color='teal'
           style={{ border: "none" }}
         >
-          <Header>Chat about this event</Header>
+          <Header>Chat about this Tip</Header>
         </Segment>
 
         <Segment attached>

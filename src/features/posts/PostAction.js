@@ -32,10 +32,45 @@ export const createPost = post => {
   };
 };
 export const updatePost = post => {
-  return async (dispatch, getState, { getFirestore }) => {
-    const firestore = getFirestore();
+  return async (dispatch, getState) => {
+    const firestore = firebase.firestore();
     try {
-      await firestore.update(`posts/${post.id}`, post);
+      dispatch(asyncActionStart());
+      let postDocRef = firestore.collection("posts").doc(post.id);
+      // let dateEqual = getState().firestore.ordered.posts[0].date.isEqual(
+      //   post.date
+      // );
+      // if (!dateEqual) {
+      let batch = firestore.batch();
+      batch.update(postDocRef, post);
+
+      let postActivityRef = firestore.collection("activity");
+      let postactivityQuery = await postActivityRef.where(
+        "postId",
+        "==",
+        post.id
+      );
+      let postactivityQuerySnap = await postactivityQuery.get();
+      const type = "updatedPost";
+      for (let i = 0; i < postactivityQuerySnap.docs.length; i++) {
+        let postActivityRef = await firestore
+          .collection("activity")
+          .doc(postactivityQuerySnap.docs[i].id);
+        batch.update(postActivityRef, {
+          catalystDate: post.date,
+          catalyst: post.catalyst,
+          ticker: post.ticker,
+          type: type,
+          updated: true
+        });
+      }
+      await batch.commit();
+      // } else {
+      //   await postDocRef.update(post)
+      // }
+
+      dispatch(asyncActionFinish());
+      // await firestore.update(`posts/${post.id}`, post);
       toastr.success("Success!", "Tip has been updated!");
     } catch (error) {
       toastr.error("Oops", "Something went wrong");

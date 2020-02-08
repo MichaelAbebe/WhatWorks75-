@@ -12,7 +12,8 @@ const newActivity = (type, post, id) => {
     photoURL: post.hostPhotoURL,
     timestamp: admin.firestore.FieldValue.serverTimestamp(),
     hostUid: post.hostUid,
-    postId: id
+    postId: id,
+    updated: false
   };
 };
 

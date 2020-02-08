@@ -30,6 +30,7 @@ const mapState = (state, ownProps) => {
   }
   return {
     post,
+    loading: state.async.loading,
     auth: state.firebase.auth,
     postChat:
       !isEmpty(state.firebase.data.post_chat) &&
@@ -60,7 +61,8 @@ class PostDetailsPage extends Component {
       participatingInPost,
       cancelParticipatingInPost,
       addPostComment,
-      postChat
+      postChat,
+      loading
     } = this.props;
 
     const participants =
@@ -74,6 +76,7 @@ class PostDetailsPage extends Component {
         <Grid>
           <Grid.Column width={10}>
             <PostDetailHeader
+              loading={loading}
               post={post}
               isHost={isHost}
               isParticipating={isParticipating}

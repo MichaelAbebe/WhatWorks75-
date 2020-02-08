@@ -22,7 +22,7 @@ const mapState = (state, ownProps) => {
     post =
       state.firestore.ordered.posts.filter(post => post.id === postId)[0] || {};
   }
-  return { initialValues: post, post };
+  return { initialValues: post, post,loading:state.async.loading };
 };
 
 const actions = {
@@ -64,7 +64,7 @@ class PostForm extends Component {
   onFormSubmit = async values => {
     try {
       if (this.props.initialValues.id) {
-        this.props.updatePost(values);
+      await  this.props.updatePost(values);
         this.props.history.push(`/posts/${this.props.initialValues.id}`);
       } else {
         let createdPost = await this.props.createPost(values);
@@ -83,7 +83,7 @@ class PostForm extends Component {
       submitting,
       pristine,
       post,
-      cancelToggle
+      cancelToggle,loading
     } = this.props;
     return (
       <Grid>
@@ -134,6 +134,7 @@ class PostForm extends Component {
               <Header sub color='teal' content='' />
               <Button
                 disabled={invalid || submitting || pristine}
+                loading={loading}
                 positive
                 type='submit'
               >
@@ -146,6 +147,7 @@ class PostForm extends Component {
                     ? () => history.push(`/posts/${initialValues.id}`)
                     : () => history.push("/posts")
                 }
+                disabled={loading}
               >
                 Cancel
               </Button>

@@ -28,7 +28,7 @@ const SignedIn = ({ signOut, profile, auth }) => {
           />
           <Dropdown.Item
             as={Link}
-            to='/Settings'
+            to='/settings/basic'
             text='Settings'
             icon='settings'
           />

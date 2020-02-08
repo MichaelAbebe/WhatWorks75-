@@ -84,18 +84,58 @@ export const deletePhoto = photo => async (
     throw new Error("Problem Deleting photo");
   }
 };
-export const setMainPhoto = photo => async (
-  dispatch,
-  getState,
-  { getFirebase }
-) => {
-  const firebase = getFirebase();
+export const setMainPhoto = photo => async (dispatch, getState) => {
+  const firestore = firebase.firestore();
+  const user = firebase.auth().currentUser;
+  // const today = new Date();
+  let userDocRef = firestore.collection("users").doc(user.uid);
+  let postParticipantRef = firestore.collection("post_participant");
+  // let userActivityRef=firestore.collection('activity')
   try {
-    return await firebase.updateProfile({
+    dispatch(asyncActionStart());
+    let batch = firestore.batch();
+    batch.update(userDocRef, {
       photoURL: photo.url
     });
+
+    let postQuery = await postParticipantRef.where("userUid", "==", user.uid);
+    // .where("created", ">", today);
+    let postQuerySnap = await postQuery.get();
+
+    //     let activityQuery= await userActivityRef.where('hostUid','===',user.uid)
+    //     let postActivityQuerySnap =await activityQuery.get();
+
+    // for (let j; j < postActivityQuerySnap.docs.length; j++) {
+    //   let activityDocRef = await firestore
+    //     .collection("posts")
+    //     .doc(postActivityQuerySnap.docs[j].data().postId);
+    //     let act =await activityDocRef.get()
+    //     if(act.data().)
+    // }
+
+    for (let i = 0; i < postQuerySnap.docs.length; i++) {
+      let postDocRef = await firestore
+        .collection("posts")
+        .doc(postQuerySnap.docs[i].data().postId);
+      let post = await postDocRef.get();
+      if (post.data().hostUid === user.uid) {
+        batch.update(postDocRef, {
+          hostPhotoURL: photo.url,
+          [`participants.${user.uid}.photoURL`]: photo.url,
+          [`activity.${user.uid}.photoURL`]: photo.url
+        });
+      } else {
+        batch.update(postDocRef, {
+          [`participants.${user.uid}.photoURL`]: photo.url
+        });
+      }
+    }
+    console.log(batch);
+    await batch.commit();
+    dispatch(asyncActionFinish());
   } catch (error) {
     console.log(error);
+    dispatch(asyncActionError());
     throw new Error("Problem setting main photo");
   }
 };
@@ -158,35 +198,43 @@ export const getUserPosts = (userUid, activeTab) => async (
   }
 };
 
-export const participatingInPost = post => async (
-  dispatch,
-  getState,
-  { getFirebase, getFirestore }
-) => {
-  const firestore = getFirestore();
-  const firebase = getFirebase();
+export const participatingInPost = post => async (dispatch, getState) => {
+  dispatch(asyncActionStart());
+  const firestore = firebase.firestore();
+
   const user = firebase.auth().currentUser;
   const profile = getState().firebase.profile;
   const participant = {
     participating: true,
-    joinDate: firestore.FieldValue.serverTimestamp(),
+    joinDate: Date.now(),
     photoURL: profile.photoURL || "/Assets/user.png",
     displayName: profile.displayName,
     host: false
   };
   try {
-    await firestore.update(`posts/${post.id}`, {
-      [`participants.${user.uid}`]: participant
+    let postDocRef = firestore.collection("posts").doc(post.id);
+    let postParticipantDocRef = firestore
+      .collection("post_participant")
+      .doc(`${post.id}_${user.uid}`);
+
+    await firestore.runTransaction(async transaction => {
+      await transaction.get(postDocRef);
+      await transaction.update(postDocRef, {
+        [`participants.${user.uid}`]: participant
+      });
+      await transaction.set(postParticipantDocRef, {
+        postId: post.id,
+        userUid: user.uid,
+        catalystDate: post.date,
+        host: false
+      });
     });
-    await firestore.set(`post_participant/${post.id}_${user.uid}`, {
-      postId: post.id,
-      userUid: user.uid,
-      catalystDate: post.date,
-      host: false
-    });
+
+    dispatch(asyncActionFinish());
     toastr.success("Success", "You are now participating in this Tip ");
   } catch (error) {
     console.log(error);
+    dispatch(asyncActionError());
     toastr.error("Oops", "Problem joining Tip ");
   }
 };
