@@ -14,7 +14,7 @@ const homePage = ({ history }) => {
       <Container text>
         <Header as='h1' inverted>
           <Image
-            src='/assets/logo.png'
+            src='Assets/logo.png'
             alt='logo'
             style={{ marginBottom: 12 }}
           />

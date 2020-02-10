@@ -32,7 +32,7 @@ class PostListItem extends Component {
                 <Item.Description>Forcast: {post.forcast}</Item.Description>
                 <Item.Description>
                   Catalyst Date:
-                  {format(post.date.toDate(), "dddd do of MMMM YYYY")}
+                  {format(post.date.toDate(), " MMMM Do YYYY")}
                 </Item.Description>
                 {post.cancelled && (
                   <Label

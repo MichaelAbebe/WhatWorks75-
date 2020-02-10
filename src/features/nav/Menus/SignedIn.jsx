@@ -33,6 +33,8 @@ const SignedIn = ({ signOut, profile, auth }) => {
             icon='settings'
           />
           <Dropdown.Item onClick={signOut} text='Sign Out' icon='power' />
+
+          <Dropdown.Item disabled center>Version 0.0.1</Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
     </Menu.Item>

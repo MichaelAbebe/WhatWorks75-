@@ -112,7 +112,7 @@ class PostForm extends Component {
               <Field
                 name='catalyst'
                 component={TextInput}
-                placeholder='Select Catalyst'
+                placeholder='Catalyst'
               />
               <Header sub color='teal' content='Catalyst Date' />
               <Field

@@ -36,13 +36,11 @@ class PostDetailChat extends Component {
         </Segment>
 
         <Segment attached>
-          <Comment.Group>
+          <Comment.Group>  
             {postChat &&
               postChat.map(comment => (
                 <Comment key={comment.id}>
-                  <Comment.Avatar
-                    src={comment.photoURL || "/Assets/user.png"}
-                  />
+                  <Comment.Avatar src={comment.photoURL || "Assets/user.png"} />
                   <Comment.Content>
                     <Comment.Author as={Link} to={`/profile/${comment.uid}`}>
                       {comment.displayName}

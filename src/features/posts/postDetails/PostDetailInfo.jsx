@@ -20,7 +20,7 @@ const PostDetailInfo = ({ post }) => {
             <Icon name='calendar' size='large' color='teal' />
           </Grid.Column>
           <Grid.Column width={15}>
-            {format(post.date.toDate(), "dddd do of MMMM YYYY")}
+            {format(post.date.toDate(), "dddd  MMMM Do YYYY")}
           </Grid.Column>
         </Grid>
       </Segment>
