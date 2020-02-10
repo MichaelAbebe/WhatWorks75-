@@ -3,11 +3,12 @@ import { connect } from "react-redux";
 import TestModal from "./TestModal";
 import LogInModal from "./LogInModal";
 import RegisterModal from "./RegisterModal";
-
+import UnauthModal from "./UnauthModal";
 const modalLookup = {
   TestModal,
   LogInModal,
-  RegisterModal
+  RegisterModal,
+  UnauthModal
 };
 
 const mapState = state => ({

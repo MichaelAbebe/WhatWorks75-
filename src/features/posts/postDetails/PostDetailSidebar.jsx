@@ -3,8 +3,6 @@ import { Segment, Item, Label, ItemImage } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
 const PostDetailSidebar = ({ participants }) => {
-  const isHost = false;
-
   return (
     <Fragment>
       <Segment
@@ -24,13 +22,13 @@ const PostDetailSidebar = ({ participants }) => {
           {participants &&
             participants.map(participant => (
               <Item key={participant.id} style={{ position: "relative" }}>
-                {isHost && (
+                {participant.host && (
                   <Label
                     style={{ position: "absolute" }}
                     color='orange'
                     ribbon='right'
                   >
-                    Host
+                    Tipper
                   </Label>
                 )}
                 <ItemImage size='mini' src={participant.photoURL} />

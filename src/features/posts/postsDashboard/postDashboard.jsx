@@ -8,10 +8,10 @@ import PostActivity from "../PostActivity/PostActivity";
 import { firestoreConnect } from "react-redux-firebase";
 
 const query = [
-  { collection: "activity", orderBy: ["timestamp", "desc"], limit: 5 }
+  { collection: "activity", orderBy: ["timestamp", "desc"], limit: 7 }
 ];
 const mapState = state => ({
-  posts: state.posts,
+  posts: state.posts.posts,
   loading: state.async.loading,
   activities: state.firestore.ordered.activity
 });
@@ -61,6 +61,7 @@ class postDashboard extends Component {
     const { loading, activities } = this.props;
     const { morePosts, loadedPosts } = this.state;
     if (this.state.loadingInitialg) return <LoadingComponent />;
+
     return (
       <Grid>
         <Grid.Column width={10}>

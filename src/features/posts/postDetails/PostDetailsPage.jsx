@@ -16,6 +16,9 @@ import {
   createDataTree
 } from "../../../app/Common/Util/Helpers";
 import { addPostComment } from "../PostAction";
+import { openModal } from "../../Modals/ModalAction";
+import LoadingComponent from "../../../app/layout/LoadingComponent";
+import NotFound from "../../../app/layout/NotFound";
 const mapState = (state, ownProps) => {
   const postId = ownProps.match.params.id;
 
@@ -30,6 +33,7 @@ const mapState = (state, ownProps) => {
   }
   return {
     post,
+    requesting: state.firestore.status.requesting,
     loading: state.async.loading,
     auth: state.firebase.auth,
     postChat:
@@ -41,7 +45,8 @@ const mapState = (state, ownProps) => {
 const actions = {
   participatingInPost,
   cancelParticipatingInPost,
-  addPostComment
+  addPostComment,
+  openModal
 };
 
 class PostDetailsPage extends Component {
@@ -56,21 +61,32 @@ class PostDetailsPage extends Component {
   }
   render() {
     const {
+      openModal,
       post,
       auth,
       participatingInPost,
       cancelParticipatingInPost,
       addPostComment,
       postChat,
-      loading
+      loading,
+      requesting,
+      match
     } = this.props;
 
     const participants =
       post && post.participants && objectToArray(post.participants);
+    // .sort((a, b) => {
+    //   return a.joinDate.toDate() - b.joinDate;
+    // });
     const isHost = post.hostUid === auth.uid;
     const chatTree = !isEmpty(postChat) && createDataTree(postChat);
     const isParticipating =
       participants && participants.some(a => a.id === auth.uid);
+    const autheniticated = auth.isLoaded && !isEmpty;
+    const loadingpost = requesting[`posts/${match.params.id}`];
+
+    if (loadingpost) return <LoadingComponent />;
+    if (Object.keys(post).length === 0) return <NotFound />;
     return (
       <div>
         <Grid>
@@ -82,6 +98,8 @@ class PostDetailsPage extends Component {
               isParticipating={isParticipating}
               participatingInPost={participatingInPost}
               cancelParticipatingInPost={cancelParticipatingInPost}
+              autheniticated={autheniticated}
+              openModal={openModal}
             />
             <PostDetailInfo post={post} />
             {isParticipating ? (

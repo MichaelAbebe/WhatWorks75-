@@ -26,43 +26,45 @@ const RegisterForm = ({
   return (
     <div>
       <Form
-        size="large"
-        autoComplete="off"
+        size='large'
+        autoComplete='off'
         onSubmit={handleSubmit(registerUser)}
       >
         <Segment>
           <Field
-            name="displayName"
-            type="text"
+            name='displayName'
+            type='text'
             component={TextInput}
-            placeholder="Known As"
+            placeholder='Known As'
           />
           <Field
-            name="email"
-            type="text"
+            name='email'
+            type='text'
             component={TextInput}
-            placeholder="Email"
+            placeholder='Email'
           />
           <Field
-            name="password"
-            type="password"
+            name='password'
+            type='password'
             component={TextInput}
-            placeholder="Password"
+            placeholder='Password'
           />
           {error && (
-            <Label basic color="red">
+            <Label basic color='red'>
               {error}
             </Label>
           )}
           <Button
             disable={invalid || submitting}
             fluid
-            size="large"
-            color="teal"
+            size='large'
+            color='teal'
+            loading={submitting}
           >
             Register
           </Button>
-          <Divider horizontal >or</Divider><SocialLogin/>
+          <Divider horizontal>or</Divider>
+          <SocialLogin />
         </Segment>
       </Form>
     </div>

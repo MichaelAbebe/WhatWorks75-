@@ -12,6 +12,8 @@ import UserDetailedPage from "../../features/user/userDetailed/UserDetailedPage"
 import TestComponent from "../../features/TestArea/TestComponent";
 import PostForm from "../../features/posts/PostForm/PostForm";
 import ModalManager from "../../features/Modals/ModalManager";
+import { UserIsAuthenticated } from "../../features/Auth/AuthWrapper";
+import NotFound from "./NotFound";
 class App extends Component {
   render() {
     return (
@@ -27,13 +29,32 @@ class App extends Component {
                 <Container className='main'>
                   <Switch>
                     <Route exact path='/posts' component={PostDashboard} />
-                    <Route path='/posts/:id' component={PostDetailsPage} />
-                    <Route path='/people' component={PeopleDashboard} />
-                    <Route path='/profile/:id' component={UserDetailedPage} />
-                    <Route path='/settings' component={SettingsDashboard} />
-                    <Route path='/manage/:id' component={PostForm} />
-                    <Route path='/createPost' component={PostForm} />
+                    <Route
+                      path='/posts/:id'
+                      component={UserIsAuthenticated(PostDetailsPage)}
+                    />
+                    <Route
+                      path='/people'
+                      component={UserIsAuthenticated(PeopleDashboard)}
+                    />
+                    <Route
+                      path='/profile/:id'
+                      component={UserIsAuthenticated(UserDetailedPage)}
+                    />
+                    <Route
+                      path='/settings'
+                      component={UserIsAuthenticated(SettingsDashboard)}
+                    />
+                    <Route
+                      path='/manage/:id'
+                      component={UserIsAuthenticated(PostForm)}
+                    />
+                    <Route
+                      path='/createPost'
+                      component={UserIsAuthenticated(PostForm)}
+                    />
                     <Route path='/test' component={TestComponent} />
+                    <Route component={NotFound} />
                   </Switch>
                 </Container>
               </Fragment>

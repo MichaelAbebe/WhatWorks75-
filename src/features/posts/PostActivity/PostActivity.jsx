@@ -3,7 +3,7 @@ import { Header, Segment, Feed, Sticky } from "semantic-ui-react";
 import PostActivityItem from "./PostActivityItem";
 const PostActivity = ({ activities, contextRef }) => {
   return (
-    <Sticky context={contextRef} offset={94} styleElement={{ zIndex: 0 }}>
+    <Sticky context={contextRef} offset={95} styleElement={{ zIndex: 0 }}>
       <Header attached='top' content='Recent Activity' />
       <Segment attached>
         <Feed>

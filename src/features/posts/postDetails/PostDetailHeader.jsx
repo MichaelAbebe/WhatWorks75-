@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { Segment, Image, Item, Header, Button } from "semantic-ui-react";
+import { Segment, Image, Item, Header, Button, Label } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 // import format from "date-fns";
 const postImageStyle = {
@@ -20,7 +20,8 @@ const PostDetailHeader = ({
   isHost,
   isParticipating,
   participatingInPost,
-  cancelParticipatingInPost,loading
+  cancelParticipatingInPost,
+  loading
 }) => {
   return (
     <Segment.Group>
@@ -57,7 +58,7 @@ const PostDetailHeader = ({
       </Segment>
 
       <Segment attached='bottom' clearing>
-        {!isHost && (
+        {!isHost && !post.cancelled && (
           <Fragment>
             {isParticipating ? (
               <Button
@@ -67,11 +68,22 @@ const PostDetailHeader = ({
                 Cancel Join{" "}
               </Button>
             ) : (
-              <Button loading={loading} color='teal' onClick={() => participatingInPost(post)}>
+              <Button
+                loading={loading}
+                color='teal'
+                onClick={() => participatingInPost(post)}
+              >
                 Join
               </Button>
             )}
           </Fragment>
+        )}
+        {post.cancelled && (
+          <Label
+            size='large'
+            color='red'
+            content='This tip has been cancelled'
+          />
         )}
         {isHost && (
           <Button

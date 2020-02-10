@@ -15,9 +15,10 @@ export const createPost = post => {
     const photoURL = getState().firebase.profile.photoURL;
     const newPost = createNewPost(user, photoURL, post, firestore);
     try {
+      dispatch(asyncActionStart());
       let createdPost = await firestore.add("posts", newPost);
 
-      await firestore.set(`post_participant/${createdPost.id}_${user.id}`, {
+      await firestore.set(`post_participant/${createdPost.id}_${user.uid}`, {
         postId: createdPost.id,
         userUid: user.uid,
         catalystDate: post.date,
@@ -25,52 +26,34 @@ export const createPost = post => {
         host: true
       });
       toastr.success("Success!", "Tip has been posted!");
+      dispatch(asyncActionFinish());
       return createdPost;
     } catch (error) {
+      dispatch(asyncActionError());
       toastr.error("Oops", "Something went wrong");
     }
   };
 };
+
 export const updatePost = post => {
-  return async (dispatch, getState) => {
-    const firestore = firebase.firestore();
+  return async (dispatch, getState, { getFirestore }) => {
+    const firestore = getFirestore();
+    // const user = firebase.auth().currentUser;
+
     try {
-      dispatch(asyncActionStart());
-      let postDocRef = firestore.collection("posts").doc(post.id);
-      // let dateEqual = getState().firestore.ordered.posts[0].date.isEqual(
-      //   post.date
-      // );
-      // if (!dateEqual) {
-      let batch = firestore.batch();
-      batch.update(postDocRef, post);
-
-      let postActivityRef = firestore.collection("activity");
-      let postactivityQuery = await postActivityRef.where(
-        "postId",
-        "==",
-        post.id
-      );
-      let postactivityQuerySnap = await postactivityQuery.get();
-      const type = "updatedPost";
-      for (let i = 0; i < postactivityQuerySnap.docs.length; i++) {
-        let postActivityRef = await firestore
-          .collection("activity")
-          .doc(postactivityQuerySnap.docs[i].id);
-        batch.update(postActivityRef, {
-          catalystDate: post.date,
-          catalyst: post.catalyst,
-          ticker: post.ticker,
-          type: type,
-          updated: true
-        });
-      }
-      await batch.commit();
-      // } else {
-      //   await postDocRef.update(post)
-      // }
-
-      dispatch(asyncActionFinish());
-      // await firestore.update(`posts/${post.id}`, post);
+      await firestore.update(`posts/${post.id}`, post);
+      await firestore.update(`posts/${post.id}`, {
+        updated: true
+      });
+      // await firestore.update(`posts/${post.id}`, {
+      //   updated: true
+      // });
+      // await firestore.set(`activity/${post.id}_${post.hostUid}`, {
+      //   type: type,
+      //   catalystDate: post.date,
+      //   catalyst: post.catalyst,
+      //   ticker: post.ticker
+      // });
       toastr.success("Success!", "Tip has been updated!");
     } catch (error) {
       toastr.error("Oops", "Something went wrong");
@@ -78,6 +61,65 @@ export const updatePost = post => {
   };
 };
 
+// export const updatePost = post => {
+//   return async (dispatch, getState) => {
+//     const firestore = firebase.firestore();
+//     try {
+//       dispatch(asyncActionStart());
+//       let postDocRef = firestore.collection("posts").doc(post.id);
+//       // let dateEqual = getState().firestore.ordered.posts[0].date.isEqual(
+//       //   post.date
+//       // );
+//       // if (!dateEqual) {
+//       let batch = firestore.batch();
+//       batch.update(postDocRef, post);
+// await batch.commit();
+//       // let postActivityRef = firestore.collection("activity");
+//       // let postactivityQuery = await postActivityRef.where(
+//       //   "postId",
+//       //   "==",
+//       //   post.id
+//       // );
+//       // let postactivityQuerySnap = await postactivityQuery.get();
+//       // const type = "updatedPost";
+//       // for (let i = 0; i < postactivityQuerySnap.docs.length; i++) {
+//       //   let postActivityRef = await firestore
+//       //     .collection("activity")
+//       //     .doc(postactivityQuerySnap.docs[i].id);
+//       //   batch.update(postActivityRef, {
+//       //     catalystDate: post.date,
+//       //     catalyst: post.catalyst,
+//       //     ticker: post.ticker,
+//       //     type: type,
+//       //     updated: true
+//       //   });
+//       // }
+
+//       // } else {
+//       //   await postDocRef.update(post)
+//       // }
+
+//       dispatch(asyncActionFinish());
+//       // await firestore.update(`posts/${post.id}`, post);
+//       toastr.success("Success!", "Tip has been updated!");
+//     } catch (error) {
+//       toastr.error("Oops", "Something went wrong");
+//     }
+//   };
+// };
+
+// export const updatePost = post => {
+//   return async (dispatch, getState, { getFirestore }) => {
+//     const firestore = getFirestore();
+//     const type = "updatedPost";
+//     try {
+//       await firestore.update(`posts/${post.id}`, {post});
+//       toastr.success("Success!", "Tip has been updated!");
+//     } catch (error) {
+//       toastr.error("Oops", "Something went wrong");
+//     }
+//   };
+// };
 export const cancelToggle = (cancelled, postId) => async (
   dispatch,
   getState,

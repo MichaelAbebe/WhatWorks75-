@@ -10,7 +10,7 @@ const actions = {
   logIn,
   socialLogin
 };
-const LoginForm = ({ logIn, handleSubmit, error, socialLogin }) => {
+const LoginForm = ({ logIn, handleSubmit, error, socialLogin, submitting }) => {
   return (
     <Form size='large' onSubmit={handleSubmit(logIn)}>
       <Segment>
@@ -33,7 +33,7 @@ const LoginForm = ({ logIn, handleSubmit, error, socialLogin }) => {
           </Label>
         )}
 
-        <Button fluid size='large' color='teal'>
+        <Button loading={submitting} fluid size='large' color='teal'>
           Login
         </Button>
         <Divider horizontal>or</Divider>

@@ -6,7 +6,7 @@ import {
 } from "../Async/AsyncActions";
 import cuid from "cuid";
 import firebase from "../../app/Config/Firebase";
-import { FETCH_POSTS } from "../posts/PostConstants";
+import { FETCH_USER_POSTS } from "../posts/PostConstants";
 
 export const updateProfile = user => async (
   dispatch,
@@ -189,7 +189,7 @@ export const getUserPosts = (userUid, activeTab) => async (
       posts.push({ ...pst.data(), id: pst.id });
     }
 
-    dispatch({ type: FETCH_POSTS, payload: { posts } });
+    dispatch({ type: FETCH_USER_POSTS, payload: { posts } });
 
     dispatch(asyncActionFinish());
   } catch (error) {

@@ -22,7 +22,7 @@ const mapState = (state, ownProps) => {
     post =
       state.firestore.ordered.posts.filter(post => post.id === postId)[0] || {};
   }
-  return { initialValues: post, post,loading:state.async.loading };
+  return { initialValues: post, post, loading: state.async.loading };
 };
 
 const actions = {
@@ -64,7 +64,7 @@ class PostForm extends Component {
   onFormSubmit = async values => {
     try {
       if (this.props.initialValues.id) {
-      await  this.props.updatePost(values);
+        await this.props.updatePost(values);
         this.props.history.push(`/posts/${this.props.initialValues.id}`);
       } else {
         let createdPost = await this.props.createPost(values);
@@ -83,7 +83,8 @@ class PostForm extends Component {
       submitting,
       pristine,
       post,
-      cancelToggle,loading
+      cancelToggle,
+      loading
     } = this.props;
     return (
       <Grid>
@@ -101,14 +102,12 @@ class PostForm extends Component {
                 options={forcast}
                 placeholder='Select Forcast '
               />
-
               <Header sub color='teal' content='Stock Ticker' />
               <Field
                 name='ticker'
                 component={TextInput}
                 placeholder='Stock Ticker'
               />
-
               <Header sub color='teal' content='Catalyst' />
               <Field
                 name='catalyst'
@@ -130,7 +129,6 @@ class PostForm extends Component {
                 rows={5}
                 placeholder='Description'
               />
-
               <Header sub color='teal' content='' />
               <Button
                 disabled={invalid || submitting || pristine}
@@ -151,13 +149,16 @@ class PostForm extends Component {
               >
                 Cancel
               </Button>
-              <Button
-                type='button'
-                color={post.cancelled ? "green" : "red"}
-                floated='right'
-                content={post.cancelled ? "Reactivate Tip" : "Cancel Tip"}
-                onClick={() => cancelToggle(!post.cancelled, post.id)}
-              />
+
+              {post.id && (
+                <Button
+                  type='button'
+                  color={post.cancelled ? "green" : "red"}
+                  floated='right'
+                  content={post.cancelled ? "Reactivate Tip" : "Cancel Tip"}
+                  onClick={() => cancelToggle(!post.cancelled, post.id)}
+                />
+              )}
             </Form>
           </Segment>
         </Grid.Column>

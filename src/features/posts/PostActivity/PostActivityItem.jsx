@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Feed, Label } from "semantic-ui-react";
+import { Feed } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import distanceInWords from "date-fns/distance_in_words";
 class PostActivityItem extends Component {
@@ -73,8 +73,6 @@ class PostActivityItem extends Component {
   };
   render() {
     const { activity } = this.props;
-    
-
     return (
       <Feed.Event>
         <Feed.Label>
@@ -84,7 +82,7 @@ class PostActivityItem extends Component {
         <Feed.Content>
           <Feed.Summary>{this.renderSummary(activity)}</Feed.Summary>
           <Feed.Meta>
-            <Feed.Summary>
+            {/* <Feed.Summary>
               {activity.updated && (
                 <Label
                   style={{ top: "-20px", left: "270px" }}
@@ -102,10 +100,10 @@ class PostActivityItem extends Component {
                   color='blue'
                   tag
                 >
-                  Updated
+                  cancelled
                 </Label>
               )}
-            </Feed.Summary>
+            </Feed.Summary> */}
             <Feed.Date>
               {distanceInWords(
                 activity.timestamp && activity.timestamp.toDate(),

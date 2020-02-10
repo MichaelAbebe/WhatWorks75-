@@ -30,7 +30,7 @@ const mapState = (state, ownProps) => {
   return {
     profile,
     userUid,
-    posts: state.posts,
+    posts: state.posts.userPosts,
     postsLoading: state.async.loading,
     auth: state.firebase.auth,
     photos: state.firestore.ordered.photos,
