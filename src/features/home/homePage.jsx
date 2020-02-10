@@ -20,6 +20,7 @@ const homePage = ({ history }) => {
           />
           <span>what</span>Works
         </Header>
+
         <Button onClick={() => history.push("/posts")} size='huge' inverted>
           Get started
           <Icon name='right arrow' inverted />

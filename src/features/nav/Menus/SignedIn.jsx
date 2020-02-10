@@ -8,7 +8,7 @@ const SignedIn = ({ signOut, profile, auth }) => {
       <Image
         avatar
         spaced='right'
-        src={profile.photoURL || "/assets/user.png"}
+        src={profile.photoURL || "Assets/user.png"}
       />
       <Dropdown pointing='top left' text={profile.displayName}>
         <Dropdown.Menu>
@@ -34,7 +34,9 @@ const SignedIn = ({ signOut, profile, auth }) => {
           />
           <Dropdown.Item onClick={signOut} text='Sign Out' icon='power' />
 
-          <Dropdown.Item disabled center>Version 0.0.1</Dropdown.Item>
+          <Dropdown.Item disabled center>
+            Version 0.0.1
+          </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
     </Menu.Item>

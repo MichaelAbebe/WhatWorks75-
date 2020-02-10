@@ -6,6 +6,7 @@ import { NavLink, Link, withRouter } from "react-router-dom";
 import SignedOut from "../Menus/SignedOut";
 import SignedIn from "../Menus/SignedIn";
 import { openModal } from "../../Modals/ModalAction";
+import { toastr } from "react-redux-toastr";
 
 const actions = {
   openModal
@@ -19,7 +20,19 @@ class NavBar extends Component {
     this.props.openModal("LogInModal");
   };
   handleRegister = () => {
-    this.props.openModal("RegisterModal");
+    const message =
+      "This webite is a community of traders who shares ideas and researches.Investors are always reminded that before making any investment, you should do your own proper due dillgence on any time directly or indirectly mentioned in this web-site.Investors should also consider seeking advice from a broker or financial adviser before making any investment decisions. Any information mentioned in this web-site was not verified,and should be relied on as a suggestion. All tips and other statments, unless specified are based on the user's personal understanding/research and may subjet to future changes.";
+    try {
+      toastr.confirm(message, {
+        onOk: async () => await this.props.openModal("RegisterModal")
+      });
+    } catch (error) {
+      console.log(error);
+    }
+
+    // this.props.openModal("TestModal");
+
+    // this.props.openModal("RegisterModal");
   };
 
   handleSignOut = () => {
