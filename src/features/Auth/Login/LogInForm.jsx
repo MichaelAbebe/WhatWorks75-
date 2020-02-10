@@ -4,7 +4,6 @@ import { Field, reduxForm } from "redux-form";
 import TextInput from "../../../app/Common/Form/TextInput";
 import { logIn, socialLogin } from "../AuthActions";
 import { connect } from "react-redux";
-import SocialLogin from "../SocialLogin/SocialLogin";
 
 const actions = {
   logIn,
@@ -36,8 +35,8 @@ const LoginForm = ({ logIn, handleSubmit, error, socialLogin, submitting }) => {
         <Button loading={submitting} fluid size='large' color='teal'>
           Login
         </Button>
-        <Divider horizontal>or</Divider>
-        <SocialLogin socialLogin={socialLogin} />
+        <Divider horizontal></Divider>
+        {/* <SocialLogin socialLogin={socialLogin} /> */}
       </Segment>
     </Form>
   );

@@ -5,7 +5,6 @@ import { Form, Segment, Button, Label, Divider } from "semantic-ui-react";
 import { Field, reduxForm } from "redux-form";
 import TextInput from "../../../app/Common/Form/TextInput";
 import { registerUser } from "../AuthActions";
-import SocialLogin from "../SocialLogin/SocialLogin";
 
 const actions = {
   registerUser
@@ -63,8 +62,8 @@ const RegisterForm = ({
           >
             Register
           </Button>
-          <Divider horizontal>or</Divider>
-          <SocialLogin />
+          <Divider horizontal></Divider>
+          {/* <SocialLogin /> */}
         </Segment>
       </Form>
     </div>
