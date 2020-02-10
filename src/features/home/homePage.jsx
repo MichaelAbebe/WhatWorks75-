@@ -18,10 +18,10 @@ const homePage = ({ history }) => {
             alt='logo'
             style={{ marginBottom: 12 }}
           />
-          WhatWorks
+          <span>what</span>Works
         </Header>
         <Button onClick={() => history.push("/posts")} size='huge' inverted>
-          Get started coming soon
+          Get started
           <Icon name='right arrow' inverted />
         </Button>
       </Container>

@@ -109,7 +109,7 @@ class PostActivityItem extends Component {
                 activity.timestamp && activity.timestamp.toDate(),
                 Date.now()
               )}
-              ago
+              {''}ago
             </Feed.Date>
           </Feed.Meta>
         </Feed.Content>

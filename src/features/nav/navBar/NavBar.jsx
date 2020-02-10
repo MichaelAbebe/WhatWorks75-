@@ -9,11 +9,10 @@ import { openModal } from "../../Modals/ModalAction";
 
 const actions = {
   openModal
- 
 };
 const mapState = state => ({
   auth: state.firebase.auth,
-  profile:state.firebase.profile
+  profile: state.firebase.profile
 });
 class NavBar extends Component {
   handleSignIn = () => {
@@ -28,7 +27,7 @@ class NavBar extends Component {
     this.props.history.push("/");
   };
   render() {
-    const { auth ,profile} = this.props;
+    const { auth, profile } = this.props;
     const authenticated = auth.isLoaded && !auth.isEmpty;
     return (
       <Menu inverted fixed='top'>
@@ -42,7 +41,7 @@ class NavBar extends Component {
             <Fragment>
               <Menu.Item as={NavLink} exact to='/posts' name='Tips' />
               <Menu.Item as={NavLink} exact to='/people' name='people' />
-              <Menu.Item as={NavLink} exact to='/Test' name='Test' />
+
               <Menu.Item>
                 <Button
                   as={Link}

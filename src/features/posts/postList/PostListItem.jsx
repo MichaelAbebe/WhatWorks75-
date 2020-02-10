@@ -21,19 +21,18 @@ class PostListItem extends Component {
           <Item.Group>
             <Item>
               <Item.Image size='tiny' circular src={post.hostPhotoURL} />
-
               <Item.Content>
                 <Item.Header>{post.ticker}</Item.Header>
-                {/* as={Link} to={`/posts/${post.id}`} */}
-                <br />
-                <Item.Description>
+                <Item.Content>
                   Tiped by:
                   <Link to={`/profile/${post.hostUid}`}>{post.hostedBy}</Link>
-                </Item.Description>
-                <Item.Description>Catalyst {post.catalyst}</Item.Description>
+                </Item.Content>
+
+                <Item.Content>Catalyst {post.catalyst}</Item.Content>
                 <Item.Description>Forcast: {post.forcast}</Item.Description>
                 <Item.Description>
-                  Catalyst Date:{format(post.date.toDate(), "dddd MMM YYYY")}
+                  Catalyst Date:
+                  {format(post.date.toDate(), "dddd do of MMMM YYYY")}
                 </Item.Description>
                 {post.cancelled && (
                   <Label
@@ -44,21 +43,12 @@ class PostListItem extends Component {
                   />
                 )}
                 <Item.Description>
-                  {authenticated ? (
-                    <Button
-                      as={Link}
-                      to={`posts/${post.id}`}
-                      size='mini'
-                      color='teal'
-                      floated='right'
-                      content='View'
-                    />
-                  ) : null}
                   <Feed.Date>
                     {distanceInWords(
                       post.created && post.created.toDate(),
                       Date.now()
-                    )}{" "}
+                    )}
+                    {"    "}
                     ago
                   </Feed.Date>
                   {/* {format(post.created.toDate(), "dddd MMM YYYY")}at{" "}
@@ -69,6 +59,16 @@ class PostListItem extends Component {
           </Item.Group>
         </Segment>
         <Segment>
+          {authenticated ? (
+            <Button
+              as={Link}
+              to={`posts/${post.id}`}
+              size='mini'
+              color='teal'
+              floated='right'
+              content='View'
+            />
+          ) : null}
           <span>{post.description} </span>
         </Segment>
         <Segment secondary>

@@ -39,8 +39,8 @@ const validate = combineValidators({
 });
 
 const forcast = [
-  { key: "bullish", text: "Bullish", value: "bullish" },
-  { key: "bearish", text: "Bearish", value: "bearish" }
+  { key: "Bullish", text: "Bullish", value: "Bullish" },
+  { key: "Bearish", text: "Bearish", value: "Bearish" }
 ];
 class PostForm extends Component {
   state = {
@@ -121,6 +121,7 @@ class PostForm extends Component {
                 component={DateInput}
                 dateFormat='dd LLL yyy'
                 placeholder='Catalyst Date'
+                minDate={Date.now()}
               />
               <Header sub color='teal' content='Description' />
               <Field

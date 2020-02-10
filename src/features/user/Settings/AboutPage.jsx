@@ -4,7 +4,7 @@ import { Field, reduxForm } from "redux-form";
 
 import TextInput from "../../../app/Common/Form/TextInput";
 import TextArea from "../../../app/Common/Form/TextArea";
-import PlaceInput from "../../../app/Common/Form/PlaceInput";
+
 import SelectInput from "../../../app/Common/Form/SelectInput";
 
 const interests = [
@@ -56,7 +56,7 @@ const AboutPage = ({ pristine, submitting, handleSubmit, updateProfile }) => {
           width={8}
           name='origin'
           options={{ types: ["(regions)"] }}
-          component={PlaceInput}
+          component={TextInput}
           placeholder='Country of Origin'
         />
         <Divider />

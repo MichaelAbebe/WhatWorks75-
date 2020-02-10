@@ -1,6 +1,6 @@
 import React from "react";
 import { Segment, Grid, Icon } from "semantic-ui-react";
-
+import { format } from "date-fns";
 const PostDetailInfo = ({ post }) => {
   return (
     <Segment.Group>
@@ -9,7 +9,7 @@ const PostDetailInfo = ({ post }) => {
           <Grid.Column width={1}>
             <Icon name='lightbulb outline' size='large' color='teal' />
           </Grid.Column>
-          <Grid.Column width={15}>
+          <Grid.Column width={9}>
             <span>{post.catalyst}</span>
           </Grid.Column>
         </Grid>
@@ -19,7 +19,9 @@ const PostDetailInfo = ({ post }) => {
           <Grid.Column width={1}>
             <Icon name='calendar' size='large' color='teal' />
           </Grid.Column>
-          <Grid.Column width={15}>{/* <span>{post.date}</span> */}</Grid.Column>
+          <Grid.Column width={15}>
+            {format(post.date.toDate(), "dddd do of MMMM YYYY")}
+          </Grid.Column>
         </Grid>
       </Segment>
       <Segment attached>

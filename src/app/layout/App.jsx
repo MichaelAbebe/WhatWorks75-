@@ -9,11 +9,12 @@ import PostDetailsPage from "../../features/posts/postDetails/PostDetailsPage";
 import PeopleDashboard from "../../features/user/peopleDashboard/peopleDashboard";
 import SettingsDashboard from "../../features/user/Settings/SettingsDashboard";
 import UserDetailedPage from "../../features/user/userDetailed/UserDetailedPage";
-import TestComponent from "../../features/TestArea/TestComponent";
+
 import PostForm from "../../features/posts/PostForm/PostForm";
 import ModalManager from "../../features/Modals/ModalManager";
 import { UserIsAuthenticated } from "../../features/Auth/AuthWrapper";
 import NotFound from "./NotFound";
+
 class App extends Component {
   render() {
     return (
@@ -53,7 +54,8 @@ class App extends Component {
                       path='/createPost'
                       component={UserIsAuthenticated(PostForm)}
                     />
-                    <Route path='/test' component={TestComponent} />
+                  
+
                     <Route component={NotFound} />
                   </Switch>
                 </Container>
