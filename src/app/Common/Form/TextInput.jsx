@@ -5,12 +5,12 @@ const TextInput = ({
   input,
   width,
   type,
-  placeholder,
+  placeholder,autoCapitalize,
   meta: { touched, error }
 }) => {
   return (
     <Form.Field error={touched && !!error} width={width}>
-      <input {...input} placeholder={placeholder} type={type}  />
+      <input {...input} placeholder={placeholder} type={type} autoCapitalize={autoCapitalize}  />
       {touched && error && (
         <Label basic color="red">
           {error}

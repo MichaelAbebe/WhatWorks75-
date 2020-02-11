@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 import { format } from "date-fns";
 
 const panes = [
-  { menuItem: "All Posts", panse: { key: "allPosts" } },
-  { menuItem: "Past Posts", panse: { key: "pastPosts" } },
-  { menuItem: "Future Posts", panse: { key: "futurePosts" } },
+  { menuItem: "All Tips", panse: { key: "allPosts" } },
+  { menuItem: "Past Tips", panse: { key: "pastPosts" } },
+  { menuItem: "Future Tips", panse: { key: "futurePosts" } },
   { menuItem: "Your Tips ", panse: { key: "hosted" } }
 ];
 
@@ -31,10 +31,7 @@ const UserDetailedEvents = ({ posts, postsLoading, changeTab }) => {
                   <Card.Header textAlign='center'>{post.ticker}</Card.Header>
                   <Card.Meta textAlign='center'>
                     <div>
-                      {format(
-                        post.date && post.date.toDate(),
-                        "DD MMM YYYY"
-                      )}
+                      {format(post.date && post.date.toDate(), "DD MMM YYYY")}
                     </div>
                     {/* <div>
                       {format(post.date && post.date.toDate(), "h:mm a")}

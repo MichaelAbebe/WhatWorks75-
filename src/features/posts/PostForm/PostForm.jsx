@@ -106,6 +106,7 @@ class PostForm extends Component {
               <Field
                 name='ticker'
                 component={TextInput}
+                autoCapitalize='characters'
                 placeholder='Stock Ticker'
               />
               <Header sub color='teal' content='Catalyst' />

@@ -16,6 +16,7 @@ class PostListItem extends Component {
     const { post, auth } = this.props;
     const authenticated = auth.isLoaded && !auth.isEmpty;
     return (
+     
       <Segment.Group>
         <Segment>
           <Item.Group>

@@ -14,6 +14,7 @@ import PostForm from "../../features/posts/PostForm/PostForm";
 import ModalManager from "../../features/Modals/ModalManager";
 import { UserIsAuthenticated } from "../../features/Auth/AuthWrapper";
 import NotFound from "./NotFound";
+import Stock from "../../features/StockApi/Stock";
 
 class App extends Component {
   render() {
@@ -54,7 +55,10 @@ class App extends Component {
                       path='/createPost'
                       component={UserIsAuthenticated(PostForm)}
                     />
-                  
+                    <Route
+                      path='/stock'
+                      component={UserIsAuthenticated(Stock)}
+                    />
 
                     <Route component={NotFound} />
                   </Switch>
