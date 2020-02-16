@@ -122,7 +122,7 @@ export const setMainPhoto = photo => async (dispatch, getState) => {
         batch.update(postDocRef, {
           hostPhotoURL: photo.url,
           [`participants.${user.uid}.photoURL`]: photo.url,
-          [`activity.${user.uid}.photoURL`]: photo.url
+          // [`activity.${user.uid}.photoURL`]: photo.url
         });
       } else {
         batch.update(postDocRef, {

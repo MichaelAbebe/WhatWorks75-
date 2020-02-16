@@ -42,19 +42,21 @@ const forcast = [
   { key: "Bullish", text: "Bullish", value: "Bullish" },
   { key: "Bearish", text: "Bearish", value: "Bearish" }
 ];
+
 class PostForm extends Component {
   state = {
-    ...this.props.post
+    ...this.props.post,
+    email: {
+      recipient: "mikmikeluda@gmail.com",
+      sender: "Michael",
+      subject: "NewPost",
+      text: "Hi There  "
+    }
   };
 
   async componentDidMount() {
     const { firestore, match } = this.props;
     await firestore.setListener(`posts/${match.params.id}`);
-
-    // // console.log(post);
-    // if (!post.exists) {
-    //   history.push("/posts");
-    //   toastr.error("Sorry", "Post not found");
   }
   async componentWillUnmount() {
     const { firestore, match } = this.props;
@@ -68,6 +70,7 @@ class PostForm extends Component {
         this.props.history.push(`/posts/${this.props.initialValues.id}`);
       } else {
         let createdPost = await this.props.createPost(values);
+
         this.props.history.push(`/posts/${createdPost.id}`);
       }
     } catch (error) {
@@ -86,6 +89,7 @@ class PostForm extends Component {
       cancelToggle,
       loading
     } = this.props;
+
     return (
       <Grid>
         <Grid.Column width={10}>

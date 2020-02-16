@@ -57,6 +57,7 @@ class postDashboard extends Component {
       });
     }
   };
+
   render() {
     const { loading, activities } = this.props;
     const { morePosts, loadedPosts } = this.state;
@@ -66,7 +67,6 @@ class postDashboard extends Component {
       <Grid>
         <Grid.Column width={10}>
           <div ref={this.contextRef}>
-            {" "}
             <PostList
               loading={loading}
               posts={loadedPosts}

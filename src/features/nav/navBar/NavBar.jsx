@@ -54,8 +54,8 @@ class NavBar extends Component {
             <Fragment>
               <Menu.Item as={NavLink} exact to='/posts' name='Tips' />
               <Menu.Item as={NavLink} exact to='/people' name='people' />
-              <Menu.Item as={NavLink} exact to='/stock' name='Stock' />
 
+              <Menu.Item as={NavLink} exact to='trainings'>Trainings</Menu.Item>
               <Menu.Item>
                 <Button
                   as={Link}

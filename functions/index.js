@@ -20,11 +20,9 @@ exports.createActivity = functions.firestore
   .document("posts/{postId}")
   .onCreate(post => {
     let newPost = post.data();
-    console.log(newPost);
 
     const activity = newActivity("newPost", newPost, post.id);
 
-    console.log(activity);
     return admin
       .firestore()
       .collection("activity")
@@ -104,3 +102,5 @@ exports.updateActivity = functions.firestore
         return console.log("Error adding activity ", err);
       });
   });
+
+exports.createPost = functions.firestore.document("");

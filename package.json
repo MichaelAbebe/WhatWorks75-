@@ -3,20 +3,24 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@sendgrid/mail": "^6.5.2",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.4.0",
     "@testing-library/user-event": "^7.2.1",
+    "cors": "^2.8.5",
     "cuid": "^2.1.8",
+    "express": "^4.17.1",
     "firebase": "^6.0.2",
     "moment": "^2.22.0",
+    "nodemon": "^2.0.2",
     "react": "^16.12.0",
-    "react-admin": "^3.1.2",
-    "react-cropper": "^1.2.0",
-    "react-datepicker": "^2.5.0",
+    "react-admin": "^3.2.1",
+    "react-cropper": "^1.3.0",
+    "react-datepicker": "^2.12.1",
     "react-dom": "^16.12.0",
     "react-dropzone": "^10.1.5",
     "react-infinite-scroller": "^1.2.4",
-    "react-lazyload": "^2.5.0",
+    "react-lazyload": "^2.6.5",
     "react-load-script": "0.0.6",
     "react-places-autocomplete": "^6.1.3",
     "react-redux": "^5.1.2",
@@ -32,15 +36,17 @@
     "redux-thunk": "^2.3.0",
     "revalidate": "^1.2.0",
     "semantic-ui-react": "^0.88.2",
-    "source-map-explorer": "^2.2.2"
+    "source-map-explorer": "^2.2.2",
+    "twilio": "^3.39.4"
   },
   "scripts": {
-    "analyze":"source-map-explorer 'build/static/js/*.js'",
+    "serve": "nodemon server.js",
+    "analyze": "source-map-explorer 'build/static/js/*.js'",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy":"npm run build && firebase deploy"
+    "deploy": "npm run build && firebase deploy"
   },
   "eslintConfig": {
     "extends": "react-app"
