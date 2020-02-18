@@ -1,5 +1,13 @@
 import React, { Component } from "react";
-import { Segment, Item, Button, List, Label, Feed } from "semantic-ui-react";
+import {
+  Segment,
+  Item,
+  Button,
+  List,
+  Label,
+  Feed,
+  Grid
+} from "semantic-ui-react";
 import { format } from "date-fns";
 import { Link } from "react-router-dom";
 import Participants from "./Participants";
@@ -16,7 +24,6 @@ class PostListItem extends Component {
     const { post, auth } = this.props;
     const authenticated = auth.isLoaded && !auth.isEmpty;
     return (
-     
       <Segment.Group>
         <Segment>
           <Item.Group>
@@ -28,7 +35,6 @@ class PostListItem extends Component {
                   Tiped by:
                   <Link to={`/profile/${post.hostUid}`}>{post.hostedBy}</Link>
                 </Item.Content>
-
                 <Item.Content>Catalyst {post.catalyst}</Item.Content>
                 <Item.Description>Forcast: {post.forcast}</Item.Description>
                 <Item.Description>
@@ -43,6 +49,7 @@ class PostListItem extends Component {
                     content='This post has been canceled'
                   />
                 )}
+
                 <Item.Description>
                   <Feed.Date>
                     {distanceInWords(
@@ -52,6 +59,7 @@ class PostListItem extends Component {
                     {"    "}
                     ago
                   </Feed.Date>
+
                   {/* {format(post.created.toDate(), "dddd MMM YYYY")}at{" "}
                   {format(post.created.toDate(), "h:mm a")} */}
                 </Item.Description>
@@ -60,18 +68,24 @@ class PostListItem extends Component {
           </Item.Group>
         </Segment>
         <Segment>
-          {authenticated ? (
-            <Button
-              as={Link}
-              to={`posts/${post.id}`}
-              size='mini'
-              color='teal'
-              floated='right'
-              content='View'
-            />
-          ) : null}
-          <span>{post.description} </span>
+          <Grid>
+            <Grid.Column width={14}>{post.description}</Grid.Column>
+            <Grid.Column width={1}>
+              {" "}
+              {authenticated ? (
+                <Button
+                  size='mini'
+                  as={Link}
+                  to={`posts/${post.id}`}
+                  color='teal'
+                  content='View'
+                />
+              ) : null}
+            </Grid.Column>
+          </Grid>
+          <span> </span>
         </Segment>
+
         <Segment secondary>
           <List horizontal>
             {post.participants &&

@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Container } from "semantic-ui-react";
+import { Container, Label, Button, Segment } from "semantic-ui-react";
 import { Route, Switch, BrowserRouter, withRouter } from "react-router-dom";
 import NavBar from "../../features/nav/navBar/NavBar";
 
@@ -15,22 +15,43 @@ import ModalManager from "../../features/Modals/ModalManager";
 import { UserIsAuthenticated } from "../../features/Auth/AuthWrapper";
 import NotFound from "./NotFound";
 import { TrainingsDashboard } from "../../features/Trainings/TrainingsDashboard";
+import { verifyEmail } from "../../features/Auth/AuthReduser";
+import { connect } from "react-redux";
 
+const mapState = state => ({
+  auth: state.firebase.auth
+});
+const actions = {
+  verifyEmail
+};
 class App extends Component {
   render() {
+    const { auth, verifyEmail } = this.props;
     return (
       <BrowserRouter>
         <Fragment>
           <ModalManager />
           <Route exact path='/' component={props => <HomePage {...props} />} />
+
           <Route
             path='/(.+)'
             render={() => (
               <Fragment>
                 <NavBar />
                 <Container className='main'>
+                  {!auth.emailVerified && !auth.isEmpty ? (
+                    <Segment>
+                      <Label color='red'>Please Verify your Email !</Label>
+                      <Button
+                        positive
+                        content='Send verification Email'
+                        onClick={() => verifyEmail()}
+                      />
+                    </Segment>
+                  ) : null}
                   <Switch>
                     <Route exact path='/posts' component={PostDashboard} />
+
                     <Route
                       path='/posts/:id'
                       component={UserIsAuthenticated(PostDetailsPage)}
@@ -55,7 +76,6 @@ class App extends Component {
                       path='/createPost'
                       component={UserIsAuthenticated(PostForm)}
                     />
-
                     <Route
                       path='/trainings'
                       component={UserIsAuthenticated(TrainingsDashboard)}
@@ -71,4 +91,4 @@ class App extends Component {
     );
   }
 }
-export default withRouter(App);
+export default withRouter(connect(mapState, actions)(App));

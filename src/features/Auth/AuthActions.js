@@ -31,6 +31,11 @@ export const registerUser = user => async (
       .auth()
       .createUserWithEmailAndPassword(user.email, user.password);
     await createdUser.user.updateProfile({ displayName: user.displayName });
+
+    //Send verifiacation
+    const userS = firebase.auth().currentUser;
+    await userS.sendEmailVerification();
+
     let newUser = {
       uid: firebase.auth().currentUser.uid,
       displayName: user.displayName,
@@ -89,3 +94,14 @@ export const updatePassword = creds => async (
     throw new SubmissionError({ _error: error.message });
   }
 };
+
+// export const verifyEmail = () => async (dispatch, getState, { getFirebase }) => {
+//   const firebase = getFirebase();
+//   try {
+//     const user = firebase.auth().currentUser;
+//     await user.sendEmailVerification();
+//   } catch (error) {
+//     console.log(error.message);
+//   }
+// };
+

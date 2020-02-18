@@ -6,8 +6,17 @@ export const UserIsAuthenticated = connectedReduxRedirect({
   allowRedirectBack: true,
   redirectPath: "/posts",
   authenticatedSelector: ({ firebase: { auth } }) =>
-    auth.isLoaded && !auth.isEmpty,
+    auth.isLoaded && !auth.isEmpty ,
   redirectAction: newLoc => dispatch => {
     dispatch(openModal("UnauthModal"));
   }
 });
+// export const EmailIsVerified = connectedReduxRedirect({
+//   wrapperDisplayName: "EmailIsVerified",
+//   allowRedirectBack: true,
+//   redirectPath: "/",
+//   authenticatedSelector: ({ firebase: { auth } }) => auth.emailVerified,
+//   redirectAction: newLoc => dispatch => {
+//     dispatch(openModal("TestModal"));
+//   }
+// });
