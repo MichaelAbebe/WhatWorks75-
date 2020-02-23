@@ -19,7 +19,7 @@ class NavBar extends Component {
   handleSignIn = () => {
     this.props.openModal("LogInModal");
   };
-   handleRegister = () => {
+  handleRegister = () => {
     const message =
       "This webite is a community of traders who shares ideas and researches.Investors are always reminded that before making any investment, you should do your own proper due dillgence on any time directly or indirectly mentioned in this web-site.Investors should also consider seeking advice from a broker or financial adviser before making any investment decisions. Any information mentioned in this web-site was not verified,and should be relied on as a suggestion. All tips and other statments, unless specified are based on the user's personal understanding/research and may subjet to future changes.";
     try {
@@ -35,7 +35,7 @@ class NavBar extends Component {
     // this.props.openModal("RegisterModal");
   };
 
-    handleSignOut = () => {
+  handleSignOut = () => {
     this.props.firebase.logout();
     this.props.history.push("/");
   };
@@ -55,7 +55,9 @@ class NavBar extends Component {
               <Menu.Item as={NavLink} exact to='/posts' name='Tips' />
               <Menu.Item as={NavLink} exact to='/people' name='people' />
 
-              <Menu.Item as={NavLink} exact to='trainings'>Trainings</Menu.Item>
+              <Menu.Item as={NavLink} exact to='/trainings/stockTrainings'>
+                Trainings
+              </Menu.Item>
               <Menu.Item>
                 <Button
                   as={Link}

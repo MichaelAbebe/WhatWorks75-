@@ -11,7 +11,8 @@ export const TrainingsDashboard = () => {
       <Grid.Column width={3}>
         <TrainingsNav />
       </Grid.Column>
-      <Grid.Column width={12}>
+
+      <Grid.Column width={10}>
         <Switch>
           <Redirect exact from='trainings' to='/trainings/stocktrainings' />
           <Route
