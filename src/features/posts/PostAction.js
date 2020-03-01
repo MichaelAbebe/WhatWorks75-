@@ -45,15 +45,7 @@ export const updatePost = post => {
       await firestore.update(`posts/${post.id}`, {
         updated: true
       });
-      // await firestore.update(`posts/${post.id}`, {
-      //   updated: true
-      // });
-      // await firestore.set(`activity/${post.id}_${post.hostUid}`, {
-      //   type: type,
-      //   catalystDate: post.date,
-      //   catalyst: post.catalyst,
-      //   ticker: post.ticker
-      // });
+
       toastr.success("Success!", "Tip has been updated!");
     } catch (error) {
       toastr.error("Oops", "Something went wrong");
@@ -61,65 +53,6 @@ export const updatePost = post => {
   };
 };
 
-// export const updatePost = post => {
-//   return async (dispatch, getState) => {
-//     const firestore = firebase.firestore();
-//     try {
-//       dispatch(asyncActionStart());
-//       let postDocRef = firestore.collection("posts").doc(post.id);
-//       // let dateEqual = getState().firestore.ordered.posts[0].date.isEqual(
-//       //   post.date
-//       // );
-//       // if (!dateEqual) {
-//       let batch = firestore.batch();
-//       batch.update(postDocRef, post);
-// await batch.commit();
-//       // let postActivityRef = firestore.collection("activity");
-//       // let postactivityQuery = await postActivityRef.where(
-//       //   "postId",
-//       //   "==",
-//       //   post.id
-//       // );
-//       // let postactivityQuerySnap = await postactivityQuery.get();
-//       // const type = "updatedPost";
-//       // for (let i = 0; i < postactivityQuerySnap.docs.length; i++) {
-//       //   let postActivityRef = await firestore
-//       //     .collection("activity")
-//       //     .doc(postactivityQuerySnap.docs[i].id);
-//       //   batch.update(postActivityRef, {
-//       //     catalystDate: post.date,
-//       //     catalyst: post.catalyst,
-//       //     ticker: post.ticker,
-//       //     type: type,
-//       //     updated: true
-//       //   });
-//       // }
-
-//       // } else {
-//       //   await postDocRef.update(post)
-//       // }
-
-//       dispatch(asyncActionFinish());
-//       // await firestore.update(`posts/${post.id}`, post);
-//       toastr.success("Success!", "Tip has been updated!");
-//     } catch (error) {
-//       toastr.error("Oops", "Something went wrong");
-//     }
-//   };
-// };
-
-// export const updatePost = post => {
-//   return async (dispatch, getState, { getFirestore }) => {
-//     const firestore = getFirestore();
-//     const type = "updatedPost";
-//     try {
-//       await firestore.update(`posts/${post.id}`, {post});
-//       toastr.success("Success!", "Tip has been updated!");
-//     } catch (error) {
-//       toastr.error("Oops", "Something went wrong");
-//     }
-//   };
-// };
 export const cancelToggle = (cancelled, postId) => async (
   dispatch,
   getState,
@@ -142,12 +75,10 @@ export const cancelToggle = (cancelled, postId) => async (
   }
 };
 
-
 export const getPostsForDashboard = lastPost => async (dispatch, getState) => {
   // let today = new Date();
   const firestore = firebase.firestore();
   const postsRef = firestore.collection("posts");
-  // .where("created", ">=", today);
 
   try {
     dispatch(asyncActionStart());
@@ -171,6 +102,8 @@ export const getPostsForDashboard = lastPost => async (dispatch, getState) => {
           .limit(2));
 
     let querySnap = await query.get();
+  
+
     if (querySnap.docs.length === 0) {
       dispatch(asyncActionFinish());
       return querySnap;

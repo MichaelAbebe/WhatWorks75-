@@ -38,6 +38,7 @@ export const registerUser = user => async (
 
     let newUser = {
       uid: firebase.auth().currentUser.uid,
+      // email:user.email,
       displayName: user.displayName,
       createdAt: firebase.firestore.FieldValue.serverTimestamp()
     };
@@ -104,4 +105,3 @@ export const updatePassword = creds => async (
 //     console.log(error.message);
 //   }
 // };
-

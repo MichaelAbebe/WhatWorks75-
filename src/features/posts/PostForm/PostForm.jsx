@@ -106,6 +106,7 @@ class PostForm extends Component {
                 options={forcast}
                 placeholder='Select Forcast '
               />
+
               <Header sub color='teal' content='Stock Ticker' />
               <Field
                 name='ticker'

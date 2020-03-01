@@ -1,7 +1,50 @@
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
+const nodemailer = require("nodemailer");
+// const { getFirebase } = require("react-redux-firebase");
 admin.initializeApp(functions.config().firebase);
 
+require("dotenv").config();
+
+const { EMAIL, PASS } = process.env;
+
+const db = admin.firestore();
+const users = [
+  "sreeram.premkumar@gmail.com,michaelamuluneh@gmail.com,seifu.kirubel64@gmail.com,mikmikeluda@gmail.com,jerry.oseghale1@gmail.com,enuase503@gmail.com,henocks@gmail.com,yonathan12muluneh7@gmail.com,zelalemfantahun@gmail.com"
+];
+
+// let query = users.orderBy("createdAt");
+// let userSnap =  query.get();
+
+exports.sendEmailNotification = functions.firestore
+  .document("posts/{postId}")
+  .onCreate((snap, ctx) => {
+    const data = snap.data();
+
+    let authData = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 465,
+      secure: true,
+      auth: {
+        user: EMAIL,
+        pass: PASS
+      }
+    });
+    for (i = 0; i < users.length; i++) {
+      authData
+        .sendMail({
+          from: "info@whatworks.com",
+          to: users[i],
+          subject: `${data.hostedBy} Posted New Tip`,
+          text: "Textpart",
+          html: `${data.hostedBy} Tiped ${data.ticker} saying its ${data.forcast}  follow this link to see the tip https://whatworks-a599c.firebaseapp.com/`
+        })
+        .then(res => console.log("Successfully sent "))
+
+        .catch(err => console.log(err));
+    
+  }});
+  
 const newActivity = (type, post, id) => {
   return {
     type: type,
